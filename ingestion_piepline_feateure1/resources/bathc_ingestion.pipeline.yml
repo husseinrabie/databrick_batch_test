@@ -1,0 +1,21 @@
+resources:
+  pipelines:
+    bathc_ingestion:
+      name: bathc_ingestion
+      catalog: lake_flow_cdc_demo
+      channel: PREVIEW
+      ingestion_definition:
+        connection_name: lakeflow_demo_sql_server
+        objects:
+          - table:
+              destination_catalog: lake_flow_cdc_demo
+              destination_schema: landing
+              source_catalog: demo
+              source_schema: dbo
+              source_table: test_batch
+              table_configuration:
+                query_based_connector_config:
+                  cursor_columns:
+                    - updated_timestamp
+        source_type: SQLSERVER
+      schema: ings_p_log_event
